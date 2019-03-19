@@ -652,6 +652,7 @@ Resources:
   K8sLogs:
     Type: AWS::S3::Bucket
     Properties:
+      AccessControl: PublicRead
       
 
   # Resources for new VPC
