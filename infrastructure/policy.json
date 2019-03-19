@@ -16,7 +16,9 @@
         {
             "Effect": "Allow",
             "Action": [
-                "elasticloadbalancing:DescribeLoadBalancers"
+                "elasticloadbalancing:DescribeLoadBalancers",
+                "s3:List*",
+                "s3:Get*"
             ],
             "Resource": "*"
         }

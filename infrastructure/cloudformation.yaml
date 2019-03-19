@@ -648,6 +648,12 @@ Conditions:
       - "us-east-1"
 
 Resources:
+  # Bucket for sidecar log agent to target
+  K8sLogs:
+    Type: AWS::S3::Bucket
+    Properties:
+      
+
   # Resources for new VPC
   VPC:
     Type: AWS::EC2::VPC
@@ -803,6 +809,8 @@ Resources:
             Action:
             - ec2:Describe*
             - ec2:Get*
+            - s3:Get*
+            - s3:List*
             Resource: "*"
 
   # Resource that creates the Bastion IAM role
