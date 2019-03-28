@@ -19,14 +19,15 @@ spec:
     - name: metrics
       mountPath: /metrics
   - name: adapter
-    image: alpine:3.9.2
+    image: httpd:2.4.38-alpine
     command: ["/bin/sh", "-c"]
     # Adapt the legacy output to standard monitoring format
     args:
     - while true; do 
-        cat /metrics/raw.txt | head -1 > /metrics/adapted.txt;
-        cat /metrics/raw.txt | head -2 | tail -1 | grep -o -E '\\d+\\w' | head -1 >> /metrics/adapted.txt;
-        cat /metrics/raw.txt | head -3 | tail -1 | grep -o -E '\\d+%' | head -1 >> /metrics/adapted.txt;
+        date=$(head -1 /metrics/raw.txt);
+        memory=$(head -2 /metrics/raw.txt | tail -1 | grep -o -E '\d+\w' | head -1);
+        cpu=$(head -3 /metrics/raw.txt | tail -1 | grep -o -E '\d+%' | head -1);
+        echo "{\"date\":\"$date\",\"memory\":\"$memory\",\"cpu\":\"$cpu\"}" > /metrics/adapted.json;
         sleep 5;
       done
     # Share metric data between containers
